@@ -1,14 +1,13 @@
-name: GitHub Actions Demo
+name: Conditional Branch Steps
 
 on:
   push:
 
-env:
-  GREETING: "Hello from environment variable!"
-
 jobs:
-  build:
+  conditional-steps:
     runs-on: ubuntu-latest
+    env:
+      GREETING: "Hello from environment variable!"
 
     steps:
       - name: Checkout repository
@@ -31,6 +30,19 @@ jobs:
 
       - name: Combine files
         run: cat main.txt greeting.txt > combined.txt
+
+      - name: Generate TOC
+        uses: technote-space/toc-generator@v4
+        with:
+          TOC_TITLE: "## Table of Contents"
+
+      - name: This runs on master only
+        if: github.ref == 'refs/heads/master'
+        run: echo "✅ You're on master branch!"
+
+      - name: This runs when not on master
+        if: github.ref != 'refs/heads/master'
+        run: echo "You're NOT on master branch!"
 
       - name: Generate TOC
         uses: technote-space/toc-generator@v4
