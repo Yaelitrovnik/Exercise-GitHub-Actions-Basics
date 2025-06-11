@@ -1,10 +1,10 @@
-name: Conditional Branch Steps
+name: Add Environment Variable Steps
 
 on:
   push:
 
 jobs:
-  conditional-steps:
+  env-example:
     runs-on: ubuntu-latest
     env:
       GREETING: "Hello from environment variable!"
@@ -31,29 +31,4 @@ jobs:
       - name: Combine files
         run: cat main.txt greeting.txt > combined.txt
 
-      - name: Generate TOC
-        uses: technote-space/toc-generator@v4
-        with:
-          TOC_TITLE: "## Table of Contents"
-
-      - name: This runs on master only
-        if: github.ref == 'refs/heads/master'
-        run: echo "✅ You're on master branch!"
-
-      - name: This runs when not on master
-        if: github.ref != 'refs/heads/master'
-        run: echo "You're NOT on master branch!"
-
-      - name: Generate TOC
-        uses: technote-space/toc-generator@v4
-        with:
-          TOC_TITLE: "## Table of Contents"
-
-      - name: This runs on main only
-        if: github.ref == 'refs/heads/master'  # Change 'main' to 'master' if your default branch is 'master'
-        run: echo "You're on main branch!"
-
-      - name: This runs when not on main
-        if: github.ref != 'refs/heads/master'
-        run: echo "You're NOT on main branch!"
 
