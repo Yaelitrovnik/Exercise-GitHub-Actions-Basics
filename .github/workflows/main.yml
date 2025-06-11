@@ -1,3 +1,11 @@
+name: Branch Test Workflow
+
+on:
+  push:
+
+jobs:
+  test-branches:
+    runs-on: ubuntu-latest
     env:
       GREETING: "Hello from environment variable!"
 
@@ -6,7 +14,7 @@
         uses: actions/checkout@v3
 
       - name: Say Hello
-        run: echo "Welome to GitHub Actions!"
+        run: echo "Welcome to GitHub Actions!"
 
       - name: List files
         run: ls -la
@@ -15,10 +23,10 @@
         run: cat main.txt
 
       - name: Print env variable
-        run: echo $GREETING
+        run: echo "${GREETING}"
 
       - name: Write env var to file
-        run: echo $GREETING > greeting.txt
+        run: echo "${GREETING}" > greeting.txt
 
       - name: Combine files
         run: cat main.txt greeting.txt > combined.txt
@@ -29,10 +37,10 @@
           TOC_TITLE: "## Table of Contents"
 
       - name: This runs on main only
-        if: github.ref == 'refs/heads/main'
-        run: echo "You're on main branch!"
+        if: github.ref == 'refs/heads/master'  # use 'master' instead of 'main' if that's your branch
+        run: echo "✅ You're on main branch!"
 
       - name: This runs when not on main
-        if: github.ref != 'refs/heads/main'
+        if: github.ref != 'refs/heads/master'
         run: echo "You're NOT on main branch!"
 
