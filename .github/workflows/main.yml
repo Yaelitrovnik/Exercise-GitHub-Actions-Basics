@@ -30,7 +30,7 @@
 
       - name: This runs on main only
         if: github.ref == 'refs/heads/main'
-        run: echo "✅ You're on main branch!"
+        run: echo "You're on main branch!"
 
       - name: This runs when not on main
         if: github.ref != 'refs/heads/main'
