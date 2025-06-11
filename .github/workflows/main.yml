@@ -27,3 +27,12 @@
         uses: technote-space/toc-generator@v4
         with:
           TOC_TITLE: "## Table of Contents"
+
+      - name: This runs on main only
+        if: github.ref == 'refs/heads/main'
+        run: echo "✅ You're on main branch!"
+
+      - name: This runs when not on main
+        if: github.ref != 'refs/heads/main'
+        run: echo "You're NOT on main branch!"
+
