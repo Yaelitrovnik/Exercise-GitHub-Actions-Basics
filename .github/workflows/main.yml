@@ -1,22 +1,25 @@
-name: Basic Workflow
-
-on:
-  push:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
+    env:
+      GREETING: "Hello from environment variable!"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Say Hello
-        run: echo "👋 Welcome to GitHub Actions!"
+        run: echo "Welome to GitHub Actions!"
 
       - name: List files
         run: ls -la
 
       - name: Show main.txt contents
         run: cat main.txt
+
+      - name: Print env variable
+        run: echo $GREETING
+
+      - name: Write env var to file
+        run: echo $GREETING > greeting.txt
+
+      - name: Combine files
+        run: cat main.txt greeting.txt > combined.txt
 
