@@ -16,3 +16,7 @@ jobs:
 
       - name: List files
         run: ls -la
+
+      - name: Show main.txt contents
+        run: cat main.txt
+
