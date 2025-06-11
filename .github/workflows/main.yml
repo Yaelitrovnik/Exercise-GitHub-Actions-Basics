@@ -9,32 +9,87 @@ jobs:
     env:
       GREETING: "Hello from environment variable!"
 
+name: LAB10 - GitHub Actions Basics
+
+on:
+  push:
+    branches:
+      - '**'  # triggers on all branches
+  workflow_dispatch:
+
+jobs:
+  run-lab10:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    env:
+      GREETING: "Hello from LAB10!"
+        2a538b3 (Add matrix build)
+
     steps:
+      # Task 2: Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Say Hello
+      # Task 2: Display welcome message
+      - name: Print welcome message
         run: echo "Welcome to GitHub Actions!"
 
-      - name: List files
+      # Task 2: List files
+      - name: List current directory
         run: ls -la
+        shell: bash  # Ensures compatibility on all OSes
 
-      - name: Show main.txt contents
-        run: cat main.txt
+      # Task 3: Show contents of main.txt
+      - name: Show contents of main.txt
+        run: |
+          echo "Contents of main.txt:"
+          cat main.txt
+        shell: bash
 
-      - name: Print env variable
-        run: echo "${GREETING}"
+      # Task 4: Print environment variable
+      - name: Print GREETING variable
+        run: echo "$GREETING"
+        shell: bash
 
-      - name: Write env var to file
-        run: echo "${GREETING}" > greeting.txt
+      # Task 4: Write GREETING to file
+      - name: Save GREETING to greeting.txt
+        run: echo "$GREETING" > greeting.txt
+        shell: bash
 
-      - name: Combine files
-        run: cat main.txt greeting.txt > combined.txt
+      # Task 4: Combine files
+      - name: Combine files into output.txt
+        run: |
+          echo "=== GREETING ===" > output.txt
+          echo "$GREETING" >> output.txt
+          echo "" >> output.txt
+          echo "=== MAIN.TXT ===" >> output.txt
+          cat main.txt >> output.txt
+        shell: bash
 
-      - name: Generate TOC
-        uses: technote-space/toc-generator@v4
+      # Task 5: Use a GitHub Action from Marketplace (e.g., show GitHub context)
+      - name: Show GitHub context (Marketplace Action)
+        uses: actions/github-script@v6
         with:
-          TOC_TITLE: "## Table of Contents"
+          script: |
+            console.log("GitHub context:");
+            console.log(JSON.stringify(context, null, 2));
 
 
 
+
+      # Task 6: Step that only runs on main branch
+      - name: Runs only on main
+        if: github.ref == 'refs/heads/main'
+        run: echo "You are on the main branch!"
+        shell: bash
+         2a538b3 (Add matrix build)
+
+      # Task 6: Step that runs on non-main branches
+      - name: Runs only on non-main
+        if: github.ref != 'refs/heads/main'
+        run: echo "You are NOT on the main branch!"
+        shell: bash
