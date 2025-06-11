@@ -23,3 +23,7 @@
       - name: Combine files
         run: cat main.txt greeting.txt > combined.txt
 
+      - name: Generate TOC
+        uses: technote-space/toc-generator@v4
+        with:
+          TOC_TITLE: "## Table of Contents"
